@@ -9,11 +9,14 @@
 
                 <div class="panel-body">
                     You are logged in!
-
-                    <ul>
-                        <li><a href="/tasks">Tasks</a></li>
-                    </ul>
                 </div>
+                @if(checkPermission(['user']))
+                <a href="/user/tasks">Tâches</a>
+                @endif
+
+                @if(checkPermission(['admin']))
+                <a href="/admin/tasks">Tâches</a>
+                @endif
             </div>
         </div>
     </div>

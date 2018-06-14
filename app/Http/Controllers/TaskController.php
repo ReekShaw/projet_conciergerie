@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\TaskRepository;
 use App\Task;
-
+use DB;
+use Auth;
 class TaskController extends Controller
 {
     protected $tasks;
@@ -15,33 +16,25 @@ class TaskController extends Controller
         $this->middleware('auth');
         $this->tasks = $tasks;
     }
+    //----- Fonction affichage tâches ------\\
+    // public function index(Request $request)
+    // {
+    //     return view('user.index', [
+    //         'tasks' => $this->tasks->forUser($request->user())
+    //     ]);
+    // }
 
-    public function index(Request $request)
-    {
-        return view('tasks.index', [
-            'tasks' => $this->tasks->forUser($request->user())
-        ]);
+    public function index(){
+        $id = Auth::user()->name;
+        
+        $tasks = DB::table('tasks')
+        ->select('tasks.*')
+        ->join('users', 'users.id', '=', 'tasks.assigned_to')
+        ->where('users.name', '=', $id)
+        ->get();
+
+        return view('user.index', ['tasks' => $tasks]);
     }
+    
 
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|max:255'
-        ]);
-
-        $request->user()->tasks()->create([
-            'name' => $request->name
-        ]);
-
-        return redirect('/tasks');
-    }
-
-    public function destroy(Request $request, Task $task)
-    {
-        $this->authorize('destroy', $task);
-
-        $task->delete();
-
-        return redirect('/tasks');
-    }
 }

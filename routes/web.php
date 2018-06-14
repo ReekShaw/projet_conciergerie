@@ -14,10 +14,26 @@ use Illuminate\Http\Request;
 |
 */
 
+//----- Routes admin tâches ------\\
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/admin/tasks', ['middleware' => 'check-permission:admin', 'uses' => 'AdminTaskController@affichage']);
+    Route::post('/admin/task', ['middleware' => 'check-permission:admin', 'uses' => 'AdminTaskController@store']);
+    Route::delete('/admin/task/{task}', ['middleware' => 'check-permission:admin', 'uses' => 'AdminTaskController@destroy']);
+});
 
-Route::get('/tasks', 'TaskController@index');
-Route::post('/task', 'TaskController@store');
-Route::delete('/task/{task}', 'TaskController@destroy');
+//--------------------------------\\
+
+//----- Routes user tâches ------\\
+Route::get('/user/tasks', 'TaskController@index');
+//--------------------------------\\
+
+Route::get('/home', 'HomeController@index');
+
+
+
+
+
+Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
@@ -25,4 +41,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
