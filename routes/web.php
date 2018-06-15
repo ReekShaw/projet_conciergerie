@@ -30,6 +30,18 @@ Route::get('/user/tasks', 'TaskController@index');
 Route::get('/home', 'HomeController@index');
 
 
+//----- Routes tickets  ------\\
+Route::get('/tickets', 'TicketController@index');
+Route::get('/commande', 'OrderController@index');
+
+Route::get('/reclamation', function () {
+  return view('tickets/reclamation');
+});
+
+Route::get('/remarque', function () {
+  return view('tickets/remarque');
+});
+//--------------------------------\\
 
 
 
@@ -41,3 +53,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//-------------------------------//

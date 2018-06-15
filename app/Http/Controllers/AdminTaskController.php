@@ -25,6 +25,7 @@ class AdminTaskController extends Controller
             $join->on('users.id', '=', 'tasks.assigned_to');
         })
         ->select('users.name', 'tasks.title', 'tasks.id', 'tasks.assigned_to')
+        ->orderBy('users.name', 'asc')
         ->get();
         //return view ('tasks.index', ['tasks' => $tasks]);
         return $tasks;

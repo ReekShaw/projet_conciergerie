@@ -17,7 +17,6 @@
                                     <!-- Table Headings -->
                                     <thead>
                                         <th>Tâche</th>
-                                        <th>Action</th>                                       
                                     </thead>
                                     @forelse ($tasks as $task)                                    
 
@@ -26,12 +25,10 @@
                                         <tr>
                                             <!-- Task Name -->
                                             <td>
-                                                <div class="task">{{ $task->title }}</div>
+                                            <input class="archiver" type="checkbox">                                                
+                                            <div class="task">{{ $task->title }}</div><span id="fait"></span>
                                             </td>
-                                            <td>
-                                                <!-- <button class="btn btn-success archiver"><i class="fas fa-check"></i></button> -->
-                                                <input class="btn btn-success archiver" type="checkbox">
-                                            </td>
+                                            
                                         </tr>
                                     @empty
                                     <p>Aucune tâche à afficher...</p>                                    
